@@ -1,0 +1,10 @@
+*.cache
+_ReSharper.*
+*.csproj.user
+*[Rr]e[Ss]harper.user
+_ReSharper.*/
+node_packages/*
+node_modules/*
+lib/*.js
+*.log
+*.map

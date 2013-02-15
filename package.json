@@ -1,0 +1,44 @@
+{
+  "name": "kuduexec",
+  "author": "Outercurve Foundation",
+  "version": "0.1.0",
+  "description": "Tool providing a way to execute commands on your Azure Website",
+  "tags": [
+    "azure",
+    "deployment"
+  ],
+  "keywords": [
+    "node",
+    "azure",
+    "deployment"
+  ],
+  "main": "./bin/kuduexec.js",
+  "engines": {
+    "node": ">= 0.6.20"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/projectkudu/KuduExec.js.git"
+  },
+  "homepage": "http://github.com/projectkudu/KuduExec.js",
+  "bugs": {
+    "url": "http://github.com/projectkudu/KuduExec.js/issues"
+  },
+  "bin": {
+    "kuduExec": "./bin/kuduexec"
+  },
+  "licenses": [
+    {
+      "type": "Apache",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
+  "readmeFilename": "README.markdown",
+  "dependencies": {
+    "commander": "~1.1.1",
+    "colors": "~0.6.0-1"
+  }
+}
