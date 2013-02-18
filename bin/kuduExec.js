@@ -47,7 +47,7 @@ function main() {
   askUserName(function () {
     askPassword(function () {
       console.log(('Running kuduExec on ' + host + '\n').yellow);
-      sendCommand('');
+      sendCommand();
     });
   });
 }
@@ -81,69 +81,82 @@ function sendCommand(command) {
     process.exit();
   }
 
-  var post_data = JSON.stringify({
-    command: command + ' & cd',
+  command = command || '';
+  command = command.trim();
+
+  if (command == '') {
+    command = 'cd';
+  } else {
+    command = command + ' & cd';
+  }
+
+  var postData = JSON.stringify({
+    command: command,
     dir: currentDir
   });
 
-  if (command == '') {
-    post_data.command = 'cd';
-  }
-
-  var post_options = {
+  var postOptions = {
     host: host,
     port: port,
     path: '/command',
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Content-Length': post_data.length,
+      'Content-Length': postData.length,
       'Authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64')
     }
   };
 
   // Set up the request
-  var post_req = http.request(post_options, function (res) {
+  var post_req = http.request(postOptions, function (res) {
+    var result = '';
     res.setEncoding('utf8');
     res.on('data', function (chunk) {
       try {
-        var result = JSON.parse(chunk);
+        chunk = chunk || '';
+        result += chunk;
+        var trimmedResult = result.trim();
+        if (trimmedResult.lastIndexOf('}') === (trimmedResult.length - 1)) {
+          processCommandResult(JSON.parse(trimmedResult));
+        }
       }
       catch (e) {
         console.error(chunk.red);
         process.exit(1);
       }
-
-      var cd;
-      var output;
-      var resultOutput = result.Output.trim();
-
-      var cdIndex = resultOutput.lastIndexOf('\r\n');
-      if (cdIndex < 0) {
-        cd = resultOutput;
-      }
-      else {
-        cd = resultOutput.substr(cdIndex).trim();
-        output = resultOutput.substr(0, cdIndex);
-      }
-
-      if (output) {
-        console.log(output.white);
-      }
-
-      if (result.Error) {
-        console.error(result.Error.red);
-      }
-
-      currentDir = cd;
-
-      commander.prompt(cd + '> ', sendCommand);
     });
   });
 
   // post the data
-  post_req.write(post_data);
+  post_req.write(postData);
   post_req.end();
+}
+
+function processCommandResult(result) {
+  var cd;
+  var output;
+  var resultOutput = result.Output.trim();
+
+  var cdIndex = resultOutput.lastIndexOf('\r\n');
+  if (cdIndex < 0) {
+    cd = resultOutput;
+  }
+  else {
+    cd = resultOutput.substr(cdIndex).trim();
+    output = resultOutput.substr(0, cdIndex);
+  }
+
+  if (output) {
+    console.log(output.white);
+  }
+
+  if (result.Error) {
+    console.error(result.Error.red);
+  }
+
+  currentDir = cd;
+
+  commander.prompt(cd + '> ', sendCommand);
 }
 
 exports.main = main;
