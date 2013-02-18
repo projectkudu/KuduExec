@@ -147,7 +147,7 @@ function processCommandResult(result) {
   }
 
   if (output) {
-    console.log(output.white);
+    console.log(output);
   }
 
   if (result.Error) {
