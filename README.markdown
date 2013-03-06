@@ -4,6 +4,8 @@ Tool providing a way to execute commands on your Azure Website
 
 #### Installing
 
+First, install [Node](http://nodejs.org/) if you don't already have it. Then run:
+
     npm install https://github.com/projectkudu/KuduExec/tarball/master -g
 
 #### Running
