@@ -1,7 +1,7 @@
 {
   "name": "kuduexec",
   "author": "Outercurve Foundation",
-  "version": "0.1.2-0",
+  "version": "0.1.2",
   "description": "Tool providing a way to execute commands on your Azure Website",
   "tags": [
     "azure",
