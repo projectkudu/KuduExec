@@ -21,11 +21,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/projectkudu/KuduExec.js.git"
+    "url": "https://github.com/projectkudu/KuduExec.git"
   },
-  "homepage": "http://github.com/projectkudu/KuduExec.js",
+  "homepage": "http://github.com/projectkudu/KuduExec",
   "bugs": {
-    "url": "http://github.com/projectkudu/KuduExec.js/issues"
+    "url": "http://github.com/projectkudu/KuduExec/issues"
   },
   "bin": {
     "kuduExec": "./bin/kuduexec"
