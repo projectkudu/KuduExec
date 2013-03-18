@@ -10,6 +10,7 @@ var username;
 var password;
 
 function main() {
+
   if (process.argv.length != 3) {
     console.error('Usage: kuduExec [kudu service url (with username)]')
     process.exit(1);
