@@ -10,13 +10,6 @@ var username;
 var password;
 
 function main() {
-  /*var commander = require("commander");
-  commander.version("0.0.1").usage("[options]").option("-f, --fromDir <dir path>", "Source directory to sync").option("-t, --toDir <dir path>", "Destination directory to sync").option("-n, --nextManifest <manifest file path>", "Next manifest file path").option("-p, --previousManifest [manifest file path]", "Previous manifest file path").option("-i, --ignore [patterns]", "List of files/directories to ignore and not sync, delimited by ;").option("-q, --quiet", "No logging").option("-w, --whatIf", "Only log without actual copy/remove of files").parse(process.argv);
-  var commanderValues = commander;
-  var fromDir = commanderValues.fromDir;*/
-
-  // https://amitap:iis6!dfu@at.scm.kudu3.antares-test.windows-int.net/at.git
-
   if (process.argv.length != 3) {
     console.error('Usage: kuduExec [kudu service url (with username)]')
     process.exit(1);
@@ -110,21 +103,34 @@ function sendCommand(command) {
   // Set up the request
   var post_req = http.request(postOptions, function (res) {
     var result = '';
+
     res.setEncoding('utf8');
+
     res.on('data', function (chunk) {
+      chunk = chunk || '';
+      result += chunk;
+    });
+
+    res.on('end', function () {
+      if (res.statusCode != 200) {
+        console.error(('Status code - ' + res.statusCode + '\n').red + result);
+        process.exit(1);
+      }
+
       try {
-        chunk = chunk || '';
-        result += chunk;
         var trimmedResult = result.trim();
-        if (trimmedResult.lastIndexOf('}') === (trimmedResult.length - 1)) {
-          processCommandResult(JSON.parse(trimmedResult));
-        }
+        processCommandResult(JSON.parse(trimmedResult));
       }
       catch (e) {
-        console.error(chunk.red);
+        console.error(result.red);
         process.exit(1);
       }
     });
+  });
+
+  post_req.on('error', function (error) {
+    console.error(chunk.red);
+    process.exit(1);
   });
 
   // post the data
