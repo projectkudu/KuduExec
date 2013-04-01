@@ -123,6 +123,7 @@ function sendCommand(command) {
         processCommandResult(JSON.parse(trimmedResult));
       }
       catch (e) {
+        result = result || e;
         console.error(result.red);
         process.exit(1);
       }
@@ -130,7 +131,7 @@ function sendCommand(command) {
   });
 
   post_req.on('error', function (error) {
-    console.error(chunk.red);
+    console.error(error);
     process.exit(1);
   });
 
