@@ -81,7 +81,7 @@ function sendCommand(command) {
   if (command == '') {
     command = 'cd';
   } else {
-    command = command + ' & cd';
+    command = command + ' & echo. & cd';
   }
 
   var postData = JSON.stringify({
