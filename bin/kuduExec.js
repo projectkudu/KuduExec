@@ -1,11 +1,10 @@
-var http = require('http');
+var http = require('https');
 var url = require('url');
 var colors = require('colors');
 var commander = require('commander');
 
 var currentDir = '.';
 var host;
-var port;
 var username;
 var password;
 
@@ -19,13 +18,6 @@ function main() {
   var inputUrl = url.parse(process.argv[2]);
 
   host = inputUrl.host;
-
-  if (inputUrl.port) {
-    port = inputUrl.port;
-  }
-  else {
-    port = inputUrl.protocol == 'https' ? 443 : 80;
-  }
 
   if (inputUrl.auth) {
     var authIndex = inputUrl.auth.indexOf(':');
@@ -91,7 +83,7 @@ function sendCommand(command) {
 
   var postOptions = {
     host: host,
-    port: port,
+    port: 443,
     path: '/command',
     method: 'POST',
     headers: {
