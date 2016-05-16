@@ -16,4 +16,6 @@ First, install [Node](http://nodejs.org/) if you don't already have it. Then run
     kuduExec https://myuser@mysite.scm.azurewebsites.net/
     kuduExec https://myuser@mysite.scm.azurewebsites.net/mysite.git
 
+![Screenshot](screenshots/screenshot1.png)
+
 This project is under the benevolent umbrella of the [.NET Foundation](http://www.dotnetfoundation.org/).
