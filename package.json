@@ -28,7 +28,7 @@
     "url": "http://github.com/projectkudu/KuduExec/issues"
   },
   "bin": {
-    "kuduExec": "./bin/kuduexec"
+    "kuduexec": "./bin/kuduexec"
   },
   "licenses": [
     {

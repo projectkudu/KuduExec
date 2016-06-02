@@ -15,5 +15,5 @@
 * limitations under the License.
 */
 
-var ke = require('./kuduExec.js');
+var ke = require('./kuduexec.js');
 ke.main();

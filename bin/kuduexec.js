@@ -11,7 +11,7 @@ var password;
 function main() {
 
   if (process.argv.length != 3) {
-    console.error('Usage: kuduExec [kudu service url (with username)]')
+    console.error('Usage: kuduexec [kudu service url (with username)]')
     process.exit(1);
   }
 
@@ -32,7 +32,7 @@ function main() {
 
   askUserName(function () {
     askPassword(function () {
-      console.log(('Running kuduExec on ' + host + '\n').yellow);
+      console.log(('Running kuduexec on ' + host + '\n').yellow);
       sendCommand();
     });
   });
