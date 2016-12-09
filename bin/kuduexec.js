@@ -2,6 +2,7 @@ var http = require('https');
 var url = require('url');
 var colors = require('colors');
 var commander = require('commander');
+var packagejson = require('../package.json');
 
 var currentDir = '.';
 var host;
@@ -10,14 +11,23 @@ var password;
 
 function main() {
 
-  if (process.argv.length != 3) {
-    console.error('Usage: kuduexec [kudu service url (with username)]')
+  if (process.argv.length < 3) {
+    console.log('\nkuduscript v' + packagejson.version);
+    console.log('-----------------\n\n' +
+                'Usage:\n' +
+                '    kuduscript [kudu service url (with username)] <prompt highlight color>\n\n' +
+                'Examples:\n' +
+                '    kuduscript https://user@site.azurewebsites.net\n\n' +
+                '    To prepend hostname to prompt, pass in the color name:\n' +
+                '    kuduscript https://user@site.azurewebsites.net cyan\n');
     process.exit(1);
   }
 
   var inputUrl = url.parse(process.argv[2]);
+  var mycolor = process.argv[3];
 
   host = inputUrl.host;
+  hostShort = host.match('azurewebsites.net') ? host.split('.')[0] : host;
 
   if (inputUrl.auth) {
     var authIndex = inputUrl.auth.indexOf(':');
@@ -156,7 +166,7 @@ function processCommandResult(result) {
 
   currentDir = cd;
 
-  commander.prompt(cd + '> ', sendCommand);
+  commander.prompt(('[' + hostShort + ']').bold.white.bgRed + ' ' + cd + '> ', sendCommand);
 }
 
 exports.main = main;
