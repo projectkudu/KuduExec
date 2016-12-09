@@ -17,9 +17,9 @@ function main() {
                 'Usage:\n' +
                 '    kuduscript https://username@kudu_service_url <prompt highlight color>\n\n' +
                 'Examples:\n' +
-                '    kuduscript https://username@site.azurewebsites.net\n\n' +
+                '    kuduscript https://username@site.scm.azurewebsites.net\n\n' +
                 '    To prepend hostname to prompt, pass in the color name:\n' +
-                '    kuduscript https://username@site.azurewebsites.net cyan\n');
+                '    kuduscript https://username@site.scm.azurewebsites.net cyan\n');
     process.exit(1);
   }
 
