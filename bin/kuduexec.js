@@ -11,23 +11,35 @@ var password;
 
 function main() {
 
-  if (process.argv.length < 3) {
+  if (process.argv.length !=3 && process.argv.length !=4) {
     console.log('\nkuduscript v' + packagejson.version);
     console.log('-----------------\n\n' +
-                'Usage:\n' +
-                '    kuduscript https://username@kudu_service_url <prompt highlight color>\n\n' +
-                'Examples:\n' +
-                '    kuduscript https://username@site.scm.azurewebsites.net\n\n' +
-                '    To prepend hostname to prompt, pass in the color name:\n' +
-                '    kuduscript https://username@site.scm.azurewebsites.net cyan\n');
+                'USAGE\n' +
+                '       kuduscript https://username@kudu_service_url <prompt_color>\n\n' +
+                '       This also works but it is obviously a very bad idea:\n' +
+                '       kuduscript https://username:PASSWORD@kudu_service_url <prompt_color>\n\n' +
+                'EXAMPLES\n' +
+                '       kuduscript https://username@site.scm.azurewebsites.net\n\n' +
+                '       To prepend hostname to prompt, pass in the color name:\n' +
+                '       kuduscript https://username@site.scm.azurewebsites.net cyan\n');
     process.exit(1);
   }
 
   var inputUrl = url.parse(process.argv[2]);
-  var mycolor = process.argv[3];
-
+  var hostcolor = process.argv[3];
   host = inputUrl.host;
-  hostShort = host.match('azurewebsites.net') ? host.split('.')[0] : host;
+  shorthost = host.match('azurewebsites.net') ? host.split('.')[0] : host;
+
+  switch (hostcolor) {
+    case 'blue':
+      shorthost = ('[' + shorthost + ']').bold.white.bgBlue;
+      break;
+    case 'red':
+      shorthost = ('[' + shorthost + ']').bold.white.bgRed;
+      break
+    default:
+      shorthost = ('[' + shorthost + ']').bold.white.bgCyan;
+  }
 
   if (inputUrl.auth) {
     var authIndex = inputUrl.auth.indexOf(':');
@@ -166,7 +178,7 @@ function processCommandResult(result) {
 
   currentDir = cd;
 
-  commander.prompt(('[' + hostShort + ']').bold.white.bgRed + ' ' + cd + '> ', sendCommand);
+  commander.prompt(shorthost + ' ' + cd + '> ', sendCommand);
 }
 
 exports.main = main;
