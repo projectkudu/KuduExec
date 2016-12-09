@@ -15,11 +15,11 @@ function main() {
     console.log('\nkuduscript v' + packagejson.version);
     console.log('-----------------\n\n' +
                 'Usage:\n' +
-                '    kuduscript [kudu service url (with username)] <prompt highlight color>\n\n' +
+                '    kuduscript https://username@kudu_service_url <prompt highlight color>\n\n' +
                 'Examples:\n' +
-                '    kuduscript https://user@site.azurewebsites.net\n\n' +
+                '    kuduscript https://username@site.azurewebsites.net\n\n' +
                 '    To prepend hostname to prompt, pass in the color name:\n' +
-                '    kuduscript https://user@site.azurewebsites.net cyan\n');
+                '    kuduscript https://username@site.azurewebsites.net cyan\n');
     process.exit(1);
   }
 
